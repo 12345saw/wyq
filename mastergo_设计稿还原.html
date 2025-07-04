@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>MasterGo 设计稿还原</title>
+  <style>
+    body {
+      margin: 0;
+      background: #faf6ef;
+      width: 100vw;
+      height: 100vh;
+      min-height: 100vh;
+      font-family: 'Source Han Sans', '思源黑体', sans-serif;
+      position: relative;
+      /* overflow: hidden; */
+    }
+    .text-small {
+      position: absolute;
+      left: 120px;
+      top: 120px;
+      width: 90px;
+      height: 800px;
+      color: #00868B;
+      font-size: 90px;
+      font-family: 'Source Han Sans', '思源黑体', sans-serif;
+      font-style: normal;
+      font-weight: bold;
+      line-height: 1.1;
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      letter-spacing: 0.2em;
+      text-align: center;
+      background: none;
+      z-index: 10;
+    }
+    .text-title {
+      position: absolute;
+      left: 231px;
+      top: 72px;
+      width: 166px;
+      height: 32px;
+      color: #3D3D3D;
+      font-size: 22px;
+      font-family: 'Source Han Sans', '思源黑体', sans-serif;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+    }
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: repeat(3, 1fr);
+      gap: 32px;
+      width: 90vw;
+      height: 82vh;
+      margin: 4vh auto 4vh auto;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    .card {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      min-height: 0;
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+      overflow: hidden;
+      transition: box-shadow 0.2s;
+    }
+    .card img {
+      width: 100%;
+      height: 88%;
+      min-height: 0;
+      max-height: none;
+      object-fit: contain;
+      background: #fff;
+      border-top-left-radius: 18px;
+      border-top-right-radius: 18px;
+      display: block;
+    }
+    .card-content {
+      padding: 4px 8px 4px 8px;
+      flex: 1 0 auto;
+    }
+    .card-title {
+      font-size: 60px;
+      margin-bottom: 12px;
+      font-weight: bold;
+    }
+    .card-desc {
+      font-size: 50px;
+      font-weight: bold;
+    }
+    .card:hover {
+      box-shadow: 0 8px 32px rgba(0,134,139,0.18);
+    }
+    .img-grid {
+      display: grid;
+      grid-template-rows: repeat(2, 1fr);
+      grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+      gap: 32px;
+      width: 90vw;
+      height: 80vh;
+      max-width: 1600px;
+      max-height: 900px;
+      margin: 5vh auto;
+      padding: 0;
+      background: none;
+      align-items: center;
+      justify-items: center;
+    }
+    .img-grid img {
+      width: 100%;
+      height: 100%;
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: cover;
+      display: block;
+      border-radius: 0;
+      box-shadow: none;
+      background: none;
+      transition: transform 0.2s;
+    }
+    .img-grid img:hover {
+      transform: scale(1.04);
+      box-shadow: none;
+      z-index: 2;
+    }
+    .img-modal {
+      position: fixed;
+      left: 0; top: 0; right: 0; bottom: 0;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .img-modal-backdrop {
+      position: absolute;
+      left: 0; top: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.7);
+      z-index: 0;
+    }
+    .img-modal-content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      max-width: 90vw;
+      max-height: 90vh;
+      height: 100%;
+    }
+    .img-modal-content img {
+      max-width: 80vw;
+      max-height: 70vh;
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+      transition: transform 0.2s;
+      margin-bottom: 24px;
+    }
+    .img-modal-controls {
+      display: flex;
+      gap: 32px;
+      justify-content: center;
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 40px;
+      z-index: 2;
+    }
+    .img-modal-controls button {
+      padding: 18px 48px;
+      font-size: 28px;
+      border: none;
+      border-radius: 8px;
+      background: #00868B;
+      color: #fff;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      font-weight: bold;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    }
+    .img-modal-controls button:hover {
+      background: #005f62;
+      transform: scale(1.08);
+    }
+    .img-label-wrap {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: none;
+      border-radius: 0;
+      box-shadow: none;
+    }
+    .img-label-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 0;
+      box-shadow: none;
+      background: none;
+      display: block;
+    }
+    .img-label {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="text-small">IP设计作品展示</div>
+  <div class="text-title"></div>
+  <div class="card-grid">
+    <div class="card">
+      <img src="image/展板1.jpg" alt="展板1">
+      <div class="card-content">
+        <div class="card-title">北京市气象局IP设计</div>
+        <div class="card-desc">展板1：IP形象创意设计</div>
+      </div>
+    </div>
+    <div class="card">
+      <img src="image/36f779b670bfd5e4096a29feaa93e85.png" alt="36f779b670bfd5e4096a29feaa93e85">
+      <div class="card-content">
+        <div class="card-title">北京市气象局IP设计</div>
+        <div class="card-desc">展板2：IP形象延申周边设计</div>
+      </div>
+    </div>
+    <div class="card">
+      <img src="image/f029d25b6a253b5ede2712fd1c5197a.png" alt="f029d25b6a253b5ede2712fd1c5197a">
+      <div class="card-content">
+        <div class="card-title">北京市气象局IP设计</div>
+        <div class="card-desc">展板3：IP形象延申海报宣传设计</div>
+      </div>
+    </div>
+    <div class="card">
+      <img src="image/4.男孩IP：云澄澄.png" alt="4.男孩IP：云澄澄">
+      <div class="card-content">
+        <div class="card-title">4.男孩IP：云澄澄</div>
+        <div class="card-desc"></div>
+      </div>
+    </div>
+    <div class="card">
+      <img src="image/5.女孩IP：云晶晶.png" alt="5.女孩IP：云晶晶">
+      <div class="card-content">
+        <div class="card-title">5.女孩IP：云晶晶</div>
+        <div class="card-desc"></div>
+      </div>
+    </div>
+    <div class="card">
+      <img src="image/maya建模作品.png" alt="maya建模作品">
+      <div class="card-content">
+        <div class="card-title">maya建模小场景</div>
+        <div class="card-desc">三维建模与渲染，展现空间与细节美感</div>
+      </div>
+    </div>
+    <div class="card">
+      <img src="image/IP三视图 (2).jpg" alt="IP三视图(2)">
+      <div class="card-content">
+        <div class="card-title">北京市珍珠泉村IP形象设计</div>
+        <div class="card-desc">以卡通可爱打造IP形象，助力乡村振兴</div>
+      </div>
+    </div>
+    <div class="card">
+      <img src="image/凤凰网 IP形象制作.jpg" alt="凤凰网 IP形象制作">
+      <div class="card-content">
+        <div class="card-title">凤凰网IP制作</div>
+        <div class="card-desc">为凤凰网打造专属IP形象，提升品牌识别度</div>
+      </div>
+    </div>
+    <div class="card">
+      <img src="image/凤凰网IP.jpg" alt="凤凰网IP">
+      <div class="card-content">
+        <div class="card-title">凤凰网IP制作</div>
+        <div class="card-desc">IP形象多视角展示，丰富品牌视觉体系</div>
+      </div>
+    </div>
+    <div class="card">
+      <img src="image/IP形象设计.png" alt="IP形象设计">
+      <div class="card-content">
+        <div class="card-title">永定河导游IP形象设计</div>
+        <div class="card-desc">背着旅行书包，手拿导游旗，可爱亲切</div>
+      </div>
+    </div>
+    <div class="card">
+      <img src="image/IP三视图侧.jpg" alt="IP三视图侧">
+      <div class="card-content">
+        <div class="card-title">永定河导游IP形象设计</div>
+        <div class="card-desc"></div>
+      </div>
+    </div>
+    <div class="card">
+      <img src="image/IP三视图后.jpg" alt="IP三视图后">
+      <div class="card-content">
+        <div class="card-title">永定河导游IP形象设计</div>
+        <div class="card-desc"></div>
+      </div>
+    </div>
+  </div>
+  <!-- 图片预览遮罩层 -->
+  <div id="img-modal" class="img-modal" style="display:none;">
+    <div class="img-modal-backdrop"></div>
+    <div class="img-modal-content">
+      <img id="modal-img" src="" alt="预览" />
+      <div class="img-modal-controls">
+        <button id="zoom-in">放大</button>
+        <button id="zoom-out">缩小</button>
+        <button id="reset-img">还原</button>
+        <button id="close-modal">关闭</button>
+      </div>
+    </div>
+  </div>
+  <script>
+    // 图片点击弹窗预览
+    const imgs = document.querySelectorAll('.card img, .img-grid img');
+    const modal = document.getElementById('img-modal');
+    const modalImg = document.getElementById('modal-img');
+    const closeBtn = document.getElementById('close-modal');
+    const zoomInBtn = document.getElementById('zoom-in');
+    const zoomOutBtn = document.getElementById('zoom-out');
+    const resetBtn = document.getElementById('reset-img');
+    let scale = 1;
+    let isDragging = false;
+    let dragStartX = 0, dragStartY = 0;
+    let imgStartX = 0, imgStartY = 0;
+
+    imgs.forEach(img => {
+      img.style.cursor = 'zoom-in';
+      img.onclick = function() {
+        modal.style.display = 'flex';
+        modalImg.src = this.src;
+        scale = 1;
+        modalImg.style.transform = 'scale(1) translate(0px, 0px)';
+        modalImg.style.cursor = 'grab';
+        modalImg.dataset.tx = 0;
+        modalImg.dataset.ty = 0;
+      };
+    });
+    closeBtn.onclick = function() {
+      modal.style.display = 'none';
+    };
+    document.querySelector('.img-modal-backdrop').onclick = closeBtn.onclick;
+    zoomInBtn.onclick = function() {
+      scale += 0.2;
+      modalImg.style.transform = `scale(${scale}) translate(${modalImg.dataset.tx||0}px, ${modalImg.dataset.ty||0}px)`;
+    };
+    zoomOutBtn.onclick = function() {
+      scale = Math.max(0.2, scale - 0.2);
+      modalImg.style.transform = `scale(${scale}) translate(${modalImg.dataset.tx||0}px, ${modalImg.dataset.ty||0}px)`;
+    };
+    resetBtn.onclick = function() {
+      scale = 1;
+      modalImg.dataset.tx = 0;
+      modalImg.dataset.ty = 0;
+      modalImg.style.transform = 'scale(1) translate(0px, 0px)';
+    };
+    // 拖拽功能
+    modalImg.addEventListener('mousedown', function(e) {
+      isDragging = true;
+      dragStartX = e.clientX;
+      dragStartY = e.clientY;
+      imgStartX = Number(modalImg.dataset.tx || 0);
+      imgStartY = Number(modalImg.dataset.ty || 0);
+      modalImg.style.cursor = 'grabbing';
+    });
+    window.addEventListener('mousemove', function(e) {
+      if (!isDragging) return;
+      const dx = e.clientX - dragStartX;
+      const dy = e.clientY - dragStartY;
+      const tx = imgStartX + dx;
+      const ty = imgStartY + dy;
+      modalImg.dataset.tx = tx;
+      modalImg.dataset.ty = ty;
+      modalImg.style.transform = `scale(${scale}) translate(${tx}px, ${ty}px)`;
+    });
+    window.addEventListener('mouseup', function() {
+      if (isDragging) {
+        isDragging = false;
+        modalImg.style.cursor = 'grab';
+      }
+    });
+    // 键盘Esc关闭
+    window.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') modal.style.display = 'none';
+    });
+  </script>
+</body>
+</html> 

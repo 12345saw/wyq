@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>文创及包装作品展示</title>
+  <style>
+    body {
+      margin: 0;
+      background: #faf6ef;
+      font-family: 'Source Han Sans', '思源黑体', sans-serif;
+      position: relative;
+    }
+    .text-small {
+      position: absolute;
+      left: 44px;
+      top: 60px;
+      width: 0px;
+      height: 600px;
+      color: #00868B;
+      font-size: 28px;
+      font-family: 'Source Han Sans', '思源黑体', sans-serif;
+      font-style: normal;
+      font-weight: bold;
+      line-height: 1.1;
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      letter-spacing: 0.2em;
+      text-align: center;
+      background: none;
+      z-index: 10;
+    }
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: 1fr;
+      gap: 32px;
+      width: 90vw;
+      height: 40vh;
+      margin: 4vh auto 4vh auto;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    .card {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      min-height: 260px;
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+      overflow: hidden;
+      transition: box-shadow 0.2s;
+    }
+    .card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      display: block;
+      background: #eee;
+      cursor: zoom-in;
+    }
+    .card-content {
+      padding: 16px 16px 24px 16px;
+      flex: 1 0 auto;
+    }
+    .card-title {
+      font-size: 18px;
+      margin-bottom: 6px;
+      font-weight: bold;
+    }
+    .card-desc {
+      font-size: 13px;
+      font-weight: normal;
+    }
+    .card:hover {
+      box-shadow: 0 8px 32px rgba(0,134,139,0.18);
+    }
+    .floating-btn {
+      position: fixed;
+      right: 48px;
+      bottom: 20px;
+      background: #b2ebf2;
+      color: #00868B;
+      font-size: 22px;
+      font-weight: bold;
+      border-radius: 18px;
+      padding: 18px 48px;
+      box-shadow: 0 2px 8px rgba(0,134,139,0.10);
+      cursor: pointer;
+      z-index: 10000;
+      transition: background 0.2s, color 0.2s;
+      border: none;
+      outline: none;
+      user-select: none;
+    }
+    .floating-btn:hover {
+      background: #4dd0e1;
+      color: #fff;
+    }
+    .modal-btn {
+      padding: 10px 32px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      background: #00868B;
+      color: #fff;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,134,139,0.10);
+      transition: background 0.2s, color 0.2s;
+      margin: 0 4px;
+    }
+    .modal-btn:hover {
+      background: #005f62;
+      color: #e0f7fa;
+    }
+    .img-modal-controls {
+      z-index: 20;
+    }
+  </style>
+</head>
+<body>
+  <div class="text-small">UI及ICON作品展示</div>
+  <div class="card-grid">
+    <div class="card">
+      <img src="image/展板 1.png" alt="永定河虚拟展馆导览APP" />
+      <div class="card-content">
+        <div class="card-title">永定河虚拟展馆导览APP</div>
+        <div class="card-desc"></div>
+      </div>
+    </div>
+    <div class="card">
+      <img src="image/APP.png" alt="永定河虚拟展馆导览APP" />
+      <div class="card-content">
+        <div class="card-title">永定河虚拟展馆导览APP</div>
+        <div class="card-desc"></div>
+      </div>
+    </div>
+    <div class="card">
+      <img src="image/展板 3.png" alt="永定河虚拟展馆导览APP" />
+      <div class="card-content">
+        <div class="card-title">永定河虚拟展馆导览APP</div>
+        <div class="card-desc"></div>
+      </div>
+    </div>
+    <div class="card">
+      <img src="image/展板 4.png" alt="永定河虚拟展馆导览APP" />
+      <div class="card-content">
+        <div class="card-title">永定河虚拟展馆导览APP</div>
+        <div class="card-desc"></div>
+      </div>
+    </div>
+    <div class="card">
+      <img src="image/汇总.png" alt="ICON设计" />
+      <div class="card-content">
+        <div class="card-title">ICON设计</div>
+        <div class="card-desc"></div>
+      </div>
+    </div>
+    <div class="card">
+      <img src="image/公司ICON设计.png" alt="ICON设计" />
+      <div class="card-content">
+        <div class="card-title">ICON设计</div>
+        <div class="card-desc"></div>
+      </div>
+    </div>
+  </div>
+  <div class="floating-btn">点击查看原图</div>
+  <!-- 图片点击弹窗预览 -->
+  <div id="img-modal" class="img-modal" style="display:none;position:fixed;z-index:9999;left:0;top:0;width:100vw;height:100vh;align-items:center;justify-content:center;">
+    <div class="img-modal-backdrop" style="position:fixed;left:0;top:0;width:100vw;height:100vh;background:rgba(0,0,0,0.4);"></div>
+    <div class="img-modal-content" style="position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;">
+      <img id="modal-img" src="" alt="预览" style="max-width:80vw;max-height:70vh;border-radius:12px;box-shadow:0 4px 24px rgba(0,0,0,0.18);background:#fff;" />
+      <div class="img-modal-controls" style="margin-top:32px;display:flex;gap:24px;justify-content:center;width:100%;">
+        <button class="modal-btn" id="zoom-in">放大</button>
+        <button class="modal-btn" id="zoom-out">缩小</button>
+        <button class="modal-btn" id="reset-img">还原</button>
+        <button class="modal-btn" id="close-modal">关闭</button>
+      </div>
+    </div>
+  </div>
+  <script>
+    // 图片点击弹窗预览
+    const imgs = document.querySelectorAll('.card img');
+    const modal = document.getElementById('img-modal');
+    const modalImg = document.getElementById('modal-img');
+    const closeBtn = document.getElementById('close-modal');
+    const zoomInBtn = document.getElementById('zoom-in');
+    const zoomOutBtn = document.getElementById('zoom-out');
+    const resetBtn = document.getElementById('reset-img');
+    let scale = 1;
+    let isDragging = false;
+    let dragStartX = 0, dragStartY = 0;
+    let imgStartX = 0, imgStartY = 0;
+
+    imgs.forEach(img => {
+      img.style.cursor = 'zoom-in';
+      img.onclick = function() {
+        modal.style.display = 'flex';
+        modalImg.src = this.src;
+        scale = 1;
+        modalImg.style.transform = 'scale(1) translate(0px, 0px)';
+        modalImg.style.cursor = 'grab';
+        modalImg.dataset.tx = 0;
+        modalImg.dataset.ty = 0;
+      };
+    });
+    closeBtn.onclick = function() {
+      modal.style.display = 'none';
+    };
+    document.querySelector('.img-modal-backdrop').onclick = closeBtn.onclick;
+    zoomInBtn.onclick = function() {
+      scale += 0.2;
+      modalImg.style.transform = `scale(${scale}) translate(${modalImg.dataset.tx||0}px, ${modalImg.dataset.ty||0}px)`;
+    };
+    zoomOutBtn.onclick = function() {
+      scale = Math.max(0.2, scale - 0.2);
+      modalImg.style.transform = `scale(${scale}) translate(${modalImg.dataset.tx||0}px, ${modalImg.dataset.ty||0}px)`;
+    };
+    resetBtn.onclick = function() {
+      scale = 1;
+      modalImg.dataset.tx = 0;
+      modalImg.dataset.ty = 0;
+      modalImg.style.transform = 'scale(1) translate(0px, 0px)';
+    };
+    modalImg.addEventListener('mousedown', function(e) {
+      isDragging = true;
+      dragStartX = e.clientX;
+      dragStartY = e.clientY;
+      imgStartX = Number(modalImg.dataset.tx || 0);
+      imgStartY = Number(modalImg.dataset.ty || 0);
+      modalImg.style.cursor = 'grabbing';
+    });
+    window.addEventListener('mousemove', function(e) {
+      if (!isDragging) return;
+      const dx = e.clientX - dragStartX;
+      const dy = e.clientY - dragStartY;
+      const tx = imgStartX + dx;
+      const ty = imgStartY + dy;
+      modalImg.dataset.tx = tx;
+      modalImg.dataset.ty = ty;
+      modalImg.style.transform = `scale(${scale}) translate(${tx}px, ${ty}px)`;
+    });
+    window.addEventListener('mouseup', function() {
+      if (isDragging) {
+        isDragging = false;
+        modalImg.style.cursor = 'grab';
+      }
+    });
+    window.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') modal.style.display = 'none';
+    });
+  </script>
+</body>
+</html> 

@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1440">
+  <title>东方美学设计作品集</title>
+  <style>
+    body { margin: 0; font-family: 'Roboto', sans-serif; background: #FFF; }
+    .nav { width: 100%; height: 65px; background: rgba(255,255,255,0.9); border-bottom: 1px dashed #F3F4F6; display: flex; align-items: center; justify-content: center; position: sticky; top: 0; z-index: 10; }
+    .nav-inner { width: 1280px; display: flex; align-items: center; justify-content: space-between; }
+    .nav-title { font-size: 24px; font-weight: bold; color: #00868B; margin-left: 32px; }
+    .nav-links { display: flex; gap: 32px; margin-right: 32px; }
+    .nav-link { color: #4B5563; font-size: 16px; text-decoration: none; transition: color 0.2s; }
+    .nav-link:hover { color: #00868B; }
+    .hero { width: 100%; height: 404px; background: url('https://image-resource.mastergo.com/159562658733959/159562658733969/b634b1591cf885b1fb77173ee346af36.png') center/cover no-repeat; display: flex; align-items: center; justify-content: center; }
+    .hero-content { background: rgba(255,255,255,0.8); padding: 48px 64px; border-radius: 12px; text-align: center; }
+    .hero-title { font-size: 48px; font-weight: bold; color: #00868B; margin-bottom: 24px; }
+    .hero-desc { font-size: 20px; color: #00868B; margin-bottom: 32px; }
+    .hero-btn { background: #00868B; color: #FFF; font-size: 16px; padding: 12px 32px; border: none; border-radius: 4px; cursor: pointer; transition: background 0.2s; }
+    .hero-btn:hover { background: #005f62; }
+    .section { width: 100%; background: rgba(245,230,203,0.3); padding: 80px 0; }
+    .section-inner {
+      width: 100vw;
+      max-width: none;
+      margin: 0 auto;
+    }
+    .section-title { font-size: 30px; font-weight: bold; color: #1F2937; text-align: center; margin-bottom: 48px; }
+    .works-list { display: flex; gap: 32px; justify-content: center; }
+    .work-card { width: 384px; background: #FFF; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1); overflow: hidden; display: flex; flex-direction: column; transition: transform 0.25s cubic-bezier(.22,1.61,.36,1), box-shadow 0.25s cubic-bezier(.22,1.61,.36,1); will-change: transform, box-shadow; }
+    .work-card:hover {
+      transform: scale(1.06);
+      box-shadow: 0 8px 24px -4px rgba(0,134,139,0.18), 0 2px 8px -2px rgba(0,0,0,0.08);
+      z-index: 2;
+    }
+    .work-img { width: 100%; height: 192px; object-fit: cover; }
+    .work-content { padding: 24px; }
+    .work-title { font-size: 20px; font-weight: bold; color: #000; margin-bottom: 10px; }
+    .work-desc { font-size: 16px; color: #4B5563; }
+    .about { width: 100%; background: #FFF; padding: 80px 0; }
+    .about-inner { width: 1280px; margin: 0 auto; display: flex; gap: 64px; align-items: center; }
+    .about-img-wrap { width: 384px; height: 384px; border: 8px dashed rgba(0,134,139,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-top: -168px; }
+    .about-img { width: 368px; height: 368px; border-radius: 50%; object-fit: cover; }
+    .about-content { flex: 1; }
+    .about-title { font-size: 22px; font-weight: bold; color: #4B5563; margin-bottom: 20px; }
+    .about-desc { font-size: 16px; color: #4B5563; margin-bottom: 24px; }
+    .about-tags { display: flex; gap: 16px; }
+    .about-tag { background: rgba(0,134,139,0.1); color: #00868B; border-radius: 9999px; padding: 8px 16px; font-size: 16px; margin-top: -24px; display: inline-block; }
+    .contact { width: 100%; background: rgba(245,230,203,0.3); padding: 80px 0; }
+    .contact-inner { width: 1280px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
+    .contact-title { font-size: 30px; font-weight: bold; color: #1F2937; margin-bottom: 24px; }
+    .contact-desc { font-size: 16px; color: #4B5563; margin-bottom: 32px; }
+    .contact-info { display: flex; gap: 64px; margin-bottom: 48px; }
+    .contact-item { text-align: center; }
+    .contact-item-label { font-size: 16px; color: #00868B; margin-bottom: 8px; }
+    .contact-item-value { font-size: 16px; color: #4B5563; }
+    .contact-form { width: 608px; background: #FFF; border-radius: 16px; box-shadow: 0 4px 6px -4px rgba(0,0,0,0.1), 0 10px 15px -3px rgba(0,0,0,0.1); padding: 32px; display: flex; flex-direction: column; gap: 24px; }
+    .form-input, .form-textarea { width: 100%; padding: 12px 16px; border: 1px dashed #E5E7EB; border-radius: 12px; font-size: 16px; }
+    .form-btn { background: #00868B; color: #FFF; font-size: 16px; padding: 12px 0; border: none; border-radius: 4px; cursor: pointer; transition: background 0.2s; }
+    .form-btn:hover { background: #005f62; }
+    .footer { width: 100%; background: #111827; color: #FFF; padding: 48px 0 24px; text-align: center; }
+    .footer-title { font-size: 24px; font-weight: bold; color: #FFF; margin-bottom: 16px; }
+    .footer-desc { font-size: 16px; color: #9CA3AF; margin-bottom: 16px; }
+    .footer-links { display: flex; justify-content: center; gap: 32px; margin-bottom: 16px; }
+    .footer-link { color: #9CA3AF; font-size: 16px; text-decoration: none; }
+    .footer-link:hover { color: #00868B; }
+    .edu-row {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 48px;
+      font-size: 18px;
+      font-weight: bold;
+      margin: 16px 0 8px 0;
+      color: #4B5563;
+    }
+    .edu-date { min-width: 200px; }
+    .edu-school { min-width: 180px; }
+    .edu-major { min-width: 220px; }
+    .edu-list {
+      margin: 0 0 24px 0;
+      padding-left: 20px;
+      color: #374151;
+      font-size: 18px;
+    }
+    .edu-list li { margin-bottom: 4px; }
+    .edu-list b { color: #4B5563; }
+    .intro-video-wrap {
+      margin: 40px auto 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: #f5f7fa;
+      border-radius: 24px;
+      box-shadow: 0 2px 8px rgba(0,134,139,0.08);
+      padding: 24px 32px 16px 32px;
+      max-width: 420px;
+    }
+    .intro-video {
+      width: 320px;
+      height: 180px;
+      border-radius: 16px;
+      background: #000;
+      margin-bottom: 12px;
+    }
+    .intro-video-label {
+      font-size: 18px;
+      color: #00868B;
+      font-weight: bold;
+      text-align: center;
+      margin-top: 4px;
+    }
+    .about-left-col {
+      margin-top: 180px;
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav-inner">
+      <div class="nav-title">吴亚青作品集</div>
+      <div class="nav-links">
+        <a class="nav-link" href="#works">作品展示</a>
+        <a class="nav-link" href="#about">关于我</a>
+        <a class="nav-link" href="#contact">联系方式</a>
+      </div>
+    </div>
+  </nav>
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-title">用创意改变生活，用设计点亮世界</div>
+      <div class="hero-desc">AI加速创意纬度，让作品与人心同频共振</div>
+      <button class="hero-btn" id="start-coop-btn">开始合作</button>
+    </div>
+  </section>
+  <section class="section" id="works">
+    <div class="section-inner">
+      <div class="section-title">作品展示</div>
+      <div class="works-list" style="margin-bottom:32px;">
+        <div class="work-card">
+          <a href="mastergo_设计稿还原.html">
+            <img class="work-img preview-img" src="image/展板1.jpg" alt="IP设计">
+          </a>
+          <div class="work-content">
+            <div class="work-title">IP设计</div>
+            <div class="work-desc">用像素雕刻灵魂，让 IP 会讲故事</div>
+          </div>
+        </div>
+        <div class="work-card">
+          <a href="haibao.html" style="text-decoration:none;color:inherit;display:block;">
+            <img class="work-img preview-img" src="image/凤凰网海报设计.jpg" alt="海报作品">
+            <div class="work-content">
+              <div class="work-title">海报作品</div>
+              <div class="work-desc">让视觉会说话，用海报点燃传播力</div>
+            </div>
+          </a>
+        </div>
+        <div class="work-card">
+          <a href="haibao2.html" style="text-decoration:none;color:inherit;display:block;">
+            <video class="work-img" src="viedo/三福.mp4" controls></video>
+            <div class="work-content">
+              <div class="work-title">视频作品</div>
+              <div class="work-desc">让 AI 智绘镜头语言，用创意重构视频叙事边界</div>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div class="works-list">
+        <a href="video_gallery.html" style="text-decoration:none;color:inherit;display:block;">
+          <div class="work-card">
+            <img class="work-img preview-img" src="image/戏说毛尖包装设计2.jpg" alt="文创及包装作品">
+            <div class="work-content">
+              <div class="work-title">文创及包装作品</div>
+              <div class="work-desc">文创解构文化密码，包装重构产品叙事</div>
+            </div>
+          </div>
+        </a>
+        <a href="wenchuang_gallery.html" style="text-decoration:none;color:inherit;display:block;">
+          <div class="work-card">
+            <img class="work-img preview-img" src="image/展板 3.png" alt="UI及ICON作品">
+            <div class="work-content">
+              <div class="work-title">UI及ICON作品</div>
+              <div class="work-desc">让交互有温度，用界面编织体验叙事</div>
+            </div>
+          </div>
+        </a>
+        <div class="work-card">
+          <img class="work-img preview-img" src="image/2.jpg" alt="AIGC作品">
+          <div class="work-content">
+            <div class="work-title">AIGC作品</div>
+            <div class="work-desc">驾驭 AIGC 引擎，让创意在智能中生长</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="about" id="about">
+    <div class="about-inner" style="flex-direction: row; align-items: flex-start; gap: 64px;">
+      <div class="about-left-col" style="display: flex; flex-direction: column; align-items: center; min-width: 420px;">
+        <div class="about-img-wrap">
+          <img class="about-img preview-img" src="image/我的照片1.png" alt="设计师头像">
+        </div>
+        <!-- 自我介绍视频开始 -->
+        <div class="intro-video-wrap">
+          <video class="intro-video" src="viedo/自我介绍.mp4" controls></video>
+          <div class="intro-video-label">自我介绍</div>
+        </div>
+        <!-- 自我介绍视频结束 -->
+      </div>
+      <div class="about-content">
+        <div class="section-title" style="margin-bottom: 24px; text-align: left;">关于我</div>
+        <div class="about-title" style="background: #4c9396; color: #FFF; border-radius: 16px; padding: 10px 36px; display: inline-block; font-weight: bold; font-size: 22px; margin-bottom: 24px;">教育背景 <span style="font-size:16px; font-weight:normal; margin-left:24px; color:#e0f7fa;">Educational background</span></div>
+        <div class="edu-row">
+          <div class="edu-date">2023.09-2027.06</div>
+          <div class="edu-school">北京工商大学</div>
+          <div class="edu-major">数字媒体与艺术专业</div>
+        </div>
+        <ul class="edu-list">
+          <li><b>在校绩点：</b>3.6</li>
+          <li><b>单科成绩：</b>色彩学95分；用户体验设计95分；三维静态影像设计94分；平面设计基础93分</li>
+          <li><b>获奖经历：</b>校级奖学金；优秀学生干部；北京市挑战杯铜奖；正大杯国家级三等奖；科创杯三等奖</li>
+          <li><b>在校职务：</b>班长兼团支书，积极组织班级活动，顺利完成五四晚会等活动，班级成员参与率达100%</li>
+        </ul>
+        <!-- 实习经历部分开始 -->
+        <div class="about-title" style="background: #4c9396; color: #FFF; border-radius: 16px; padding: 10px 36px; display: inline-block; font-weight: bold; font-size: 22px; margin-top:40px; margin-bottom: 24px;">实习经历 <span style="font-size:16px; font-weight:normal; margin-left:24px; color:#e0f7fa;">Internship experience</span></div>
+        <div class="edu-row">
+          <div class="edu-date">2024.12-2025.03</div>
+          <div class="edu-school">凤凰飞扬（北京）新媒体信息技术有限公司</div>
+          <div class="edu-major">设计实习生</div>
+        </div>
+        <ul class="edu-list">
+          <li><b>节气融创：</b>围绕凤凰网LOGO，并结合节气文化内涵，利用AIGC与设计技术，独立完成节气主题海报与头图设计各16张，10+份邀请函、感谢信等平面设计，方案一次通过率高超90%。</li>
+          <li><b>动态交互：</b>围绕凤凰网新闻热点与公司活动，独立完成新闻H5头图及活动H5页面设计，提出并巧妙实施动态交互设计，强化视觉冲击力与用户引导性。</li>
+          <li><b>流程智控：</b>负责入职新人信息录入，实现0失误率，缩短新人信息填写耗时20%。</li>
+          <li><b>优聘斩获：</b>同期唯一大二本科生，与研究生及海外留学生同台竞争，成功斩获实习offer。</li>
+        </ul>
+        <!-- 实习经历部分结束 -->
+        <div class="about-tags">
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="contact" id="contact">
+    <div class="contact-inner">
+      <div class="contact-title">联系我</div>
+      <div class="contact-desc">让我们一起创造独特的设计作品</div>
+      <div class="contact-info">
+        <div class="contact-item">
+          <div class="contact-item-label">邮箱</div>
+          <div class="contact-item-value">3157058460@qq.com</div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-label">电话</div>
+          <div class="contact-item-value">15239328928</div>
+        </div>
+      </div>
+      <form class="contact-form">
+        <input class="form-input" type="text" placeholder="您的姓名" required>
+        <input class="form-input" type="email" placeholder="电子邮箱" required>
+        <textarea class="form-textarea" rows="5" placeholder="项目描述" required></textarea>
+        <button class="form-btn" type="submit">发送消息</button>
+      </form>
+    </div>
+  </section>
+  <footer class="footer">
+    <div class="footer-title">作品集</div>
+    <div class="footer-desc">用创意改变生活，用设计点亮世界</div>
+    <div class="footer-links">
+      <a class="footer-link" href="#works">作品展示</a>
+      <a class="footer-link" href="#about">关于我</a>
+      <a class="footer-link" href="#contact">联系方式</a>
+    </div>
+  </footer>
+  <script>
+    document.getElementById('start-coop-btn').onclick = function() {
+      document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+    };
+  </script>
+  <!-- 图片点击弹窗预览 -->
+  <div id="img-modal" class="img-modal" style="display:none;">
+    <div class="img-modal-backdrop"></div>
+    <div class="img-modal-content">
+      <img id="modal-img" src="" alt="预览" />
+      <div class="img-modal-controls">
+        <button id="zoom-in">放大</button>
+        <button id="zoom-out">缩小</button>
+        <button id="reset-img">还原</button>
+        <button id="close-modal">关闭</button>
+      </div>
+    </div>
+  </div>
+  <script>
+    // 图片点击弹窗预览
+    const imgs = document.querySelectorAll('.preview-img');
+    const modal = document.getElementById('img-modal');
+    const modalImg = document.getElementById('modal-img');
+    const closeBtn = document.getElementById('close-modal');
+    const zoomInBtn = document.getElementById('zoom-in');
+    const zoomOutBtn = document.getElementById('zoom-out');
+    const resetBtn = document.getElementById('reset-img');
+    let scale = 1;
+    let isDragging = false;
+    let dragStartX = 0, dragStartY = 0;
+    let imgStartX = 0, imgStartY = 0;
+
+    imgs.forEach(img => {
+      img.style.cursor = 'zoom-in';
+      img.onclick = function() {
+        modal.style.display = 'flex';
+        modalImg.src = this.src;
+        scale = 1;
+        modalImg.style.transform = 'scale(1) translate(0px, 0px)';
+        modalImg.style.cursor = 'grab';
+        modalImg.dataset.tx = 0;
+        modalImg.dataset.ty = 0;
+      };
+    });
+    closeBtn.onclick = function() {
+      modal.style.display = 'none';
+    };
+    document.querySelector('.img-modal-backdrop').onclick = closeBtn.onclick;
+    zoomInBtn.onclick = function() {
+      scale += 0.2;
+      modalImg.style.transform = `scale(${scale}) translate(${modalImg.dataset.tx||0}px, ${modalImg.dataset.ty||0}px)`;
+    };
+    zoomOutBtn.onclick = function() {
+      scale = Math.max(0.2, scale - 0.2);
+      modalImg.style.transform = `scale(${scale}) translate(${modalImg.dataset.tx||0}px, ${modalImg.dataset.ty||0}px)`;
+    };
+    resetBtn.onclick = function() {
+      scale = 1;
+      modalImg.dataset.tx = 0;
+      modalImg.dataset.ty = 0;
+      modalImg.style.transform = 'scale(1) translate(0px, 0px)';
+    };
+    modalImg.addEventListener('mousedown', function(e) {
+      isDragging = true;
+      dragStartX = e.clientX;
+      dragStartY = e.clientY;
+      imgStartX = Number(modalImg.dataset.tx || 0);
+      imgStartY = Number(modalImg.dataset.ty || 0);
+      modalImg.style.cursor = 'grabbing';
+    });
+    window.addEventListener('mousemove', function(e) {
+      if (!isDragging) return;
+      const dx = e.clientX - dragStartX;
+      const dy = e.clientY - dragStartY;
+      const tx = imgStartX + dx;
+      const ty = imgStartY + dy;
+      modalImg.dataset.tx = tx;
+      modalImg.dataset.ty = ty;
+      modalImg.style.transform = `scale(${scale}) translate(${tx}px, ${ty}px)`;
+    });
+    window.addEventListener('mouseup', function() {
+      if (isDragging) {
+        isDragging = false;
+        modalImg.style.cursor = 'grab';
+      }
+    });
+    window.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') modal.style.display = 'none';
+    });
+  </script>
+</body>
+</html>
